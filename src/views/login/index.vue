@@ -82,6 +82,8 @@ export default {
         // 发请求
         this.loading = true
         await this.$store.dispatch('user/loginAction', this.loginForm)
+        // 登录成功跳转
+        this.$router.push('/')
       } finally {
         this.loading = false
       }
