@@ -3,7 +3,7 @@ import axios from 'axios'
 import { Message } from 'element-ui'
 import router from '@/router'
 // 定义超时时间
-const TimeOut = 12
+const TimeOut = 3600
 // 创建实例化axios
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API,
