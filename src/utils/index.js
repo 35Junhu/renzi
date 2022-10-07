@@ -115,3 +115,21 @@ export function param2Obj(url) {
   })
   return obj
 }
+
+// 封装一个函数，找到第一层的数据
+
+export const transListToTreeData = (list, rootVale) => {
+  const arr = []
+  list.forEach(item => {
+    if (item.pid === rootVale) {
+      // 找到之后 就要去找 item 下面有没有子节点
+      const children = transListToTreeData(list, item.id)
+      if (children.length) {
+      // 如果children的长度大于0 说明找到了子节点
+        item.children = children
+      }
+      arr.push(item)
+    }
+  })
+  return arr
+}
