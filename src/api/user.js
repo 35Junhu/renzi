@@ -23,6 +23,19 @@ export const getUserDetailById = (id) => {
   })
 }
 
+/**
+ * 更新用户信息
+ * @param {Object} data 用户的信息
+ * @returns
+ */
+export const updateUserInfo = (data) => {
+  return request({
+    url: `/sys/user/${data.id}`,
+    method: 'PUT',
+    data
+  })
+}
+
 export function logout() {
 
 }

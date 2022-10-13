@@ -18,6 +18,10 @@ import '@/permission' // permission control
 // import { imgerror } from './directives'
 // Vue.directive('imgerror', imgerror)
 
+import components from './components'
+
+Vue.use(components)
+
 import * as directives from '@/directives'
 console.log(directives)
 console.log(Object.keys(directives))
