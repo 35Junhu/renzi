@@ -19,7 +19,8 @@ import '@/permission' // permission control
 // Vue.directive('imgerror', imgerror)
 
 import components from './components'
-
+import Print from 'vue-print-nb'
+Vue.use(Print)
 Vue.use(components)
 
 import * as directives from '@/directives'

@@ -14,6 +14,18 @@
     <el-card>
       <el-table v-loading="loading" border :data="list">
         <el-table-column label="序号" sortable="" width="80" type="index" />
+        <el-table-column label="头像" align="center">
+          <template slot-scope="{row}">
+            <img
+              slot="reference"
+              v-imageerror="require('@/assets/common/bigUserHeader.png')"
+              :src="row.staffPhoto "
+              style="border-radius: 50%; width: 100px; height: 100px; padding: 10px"
+              alt=""
+              @click="genQrCode(row.staffPhoto)"
+            >
+          </template>
+        </el-table-column>
         <el-table-column label="姓名" prop="username" />
         <el-table-column label="工号" prop="workNumber" />
         <el-table-column label="聘用形式" prop="formOfEmployment" :formatter="formatterFn" />
@@ -55,12 +67,17 @@
     </el-card>
     <!-- 弹窗 -->
     <AddEmployee :is-show-add.sync="isShowAdd" />
+    <!-- 二维码弹窗 -->
+    <el-dialog title="头像二维码" :visible.sync="ercodeDialog">
+      <canvas ref="canvas" />
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import EnumHireType from '@/api/constant/employees'
 import { getEmployeeList, delEmployee } from '@/api/employees'
+import QRCode from 'qrcode'
 import AddEmployee from './components/add-employee.vue'
 export default {
   name: 'HrsaasIndex',
@@ -75,7 +92,8 @@ export default {
       total: 0,
       loading: false,
       hireType: EnumHireType.hireType,
-      isShowAdd: false
+      isShowAdd: false,
+      ercodeDialog: false
     }
   },
   mounted() {
@@ -151,6 +169,19 @@ export default {
     // 查看员工详情信息
     goDetails(row) {
       this.$router.push('/employees/detail/' + row.id)
+    },
+    // 显示二维码
+    genQrCode(staffPhoto) {
+      if (!staffPhoto) return this.$message.error('该用户还未设置头像')
+      // 显示弹窗
+      this.ercodeDialog = true
+      // 等数据全部更新后再去获取最新的dom，数据变-》视图立即变太耗费性能
+      this.$nextTick(() => {
+        QRCode.toCanvas(this.$refs.canvas, staffPhoto, function(error) {
+          if (error) console.error(error)
+          console.log('success')
+        })
+      })
     }
   }
 }

@@ -22,7 +22,6 @@
 // 4.把整合的数据抛出去
 // 5.这个组件给父组件 提供了两个参数 beforeUpload 上传前的校验 onSuccess 上传成功 拿到数据之后 可以通过这个回调把数据给父组件
 import * as XLSX from 'xlsx'
-
 export default {
   name: 'UploadExcel',
   props: {
